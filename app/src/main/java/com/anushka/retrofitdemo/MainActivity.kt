@@ -2,6 +2,7 @@ package com.anushka.retrofitdemo
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -39,6 +40,16 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+//        get single album
+        val pathResponse : LiveData <Response<AlbumsItem>> = liveData {
+            val response = retService.getSingleAlbum(4)
+            emit(response)
+        }
+
+        pathResponse.observe(this, Observer {
+            val title = it.body()?.title
+            Toast.makeText(this, title, Toast.LENGTH_LONG).show()
+        })
 
     }
 }
